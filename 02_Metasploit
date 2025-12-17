@@ -192,3 +192,72 @@ hashdump         # 🔑 Dump password hashes
 screenshot       # 📸 Take screenshot
 keyscan_start    # ⌨️ Start keylogger
 webcam_list      # 📹 List webcams
+
+
+
+------------------------
+
+
+# Start Metasploit Console
+msfconsole
+
+# Search for modules
+search *****
+search type:auxiliary name:scanner
+
+# Use a module
+use ********/*****/*****_version
+
+# Show options
+show options
+
+# Set options
+set RHOSTS ********
+set THREADS 10
+
+# Run module
+run
+
+# ***** Version Detection
+use auxiliary/scanner/*****/*****_version
+
+# ***** Share Enumeration
+use auxiliary/scanner/*****/*****_enumshares
+
+# ***** User Enumeration
+use auxiliary/scanner/*****/*****_enumusers
+
+# ***** Login Check
+use auxiliary/scanner/*****/*****_login
+
+# ***** (MS**-***) - FOR LEGITIMATE PATCH TESTING ONLY
+use exploit/*****/*****/*****
+
+# ***** (with credentials) - FOR AUTHORIZED USE ONLY
+use exploit/*****/*****/*****
+
+
+# ***** (MS**-***) - FOR LEGITIMATE PATCH TESTING ONLY
+use exploit/*****/*****/*****
+
+# ***** (with credentials) - FOR AUTHORIZED USE ONLY
+use exploit/*****/*****/*****
+
+
+sysinfo           # ℹ️ System information
+getuid           # 👤 Current user
+ps               # 📊 List processes
+migrate ********    # 🔄 Migrate to another process
+
+pwd              # 📍 Print working directory
+ls               # 📂 List files
+cd               # 📁 Change directory
+download *****    # ⬇️ Download file
+upload *****      # ⬆️ Upload file
+
+********         # 🔑 Dump password hashes (AUTHORIZED SYSTEMS ONLY)
+********       # 📸 Take screenshot
+********    # ⌨️ Start keylogger (LEGAL CTFS ONLY)
+********      # 📹 List webcams (AUTHORIZED USE ONLY)
+
+
