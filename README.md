@@ -40,3 +40,8 @@ When you need to detect SMB attacks in real-time on critical servers.
 NO RESPONSIBILITY OR LIABILITY ACCEPTED
 
 The authors and contributors of this repository accept ABSOLUTELY NO RESPONSIBILITY and assume NO LIABILITY for any misuse, damage, or illegal activities conducted using this material.
+
+## Maintainers
+- [@KaliThermal](https://github.com/KaliThermal)
+- [@leonvest](https://github.com/leonvest)
+
